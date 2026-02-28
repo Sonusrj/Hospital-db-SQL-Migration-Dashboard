@@ -1,0 +1,102 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
+  "name": "48345f928559ed816702",
+  "displayName": " Doctor Performance",
+  "displayOption": "ActualSize",
+  "height": 720,
+  "width": 1280,
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "0c9d55e0dc6048a00972",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "hospital_db bills"
+              }
+            },
+            "Property": "Total Revenue"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "Drillthrough"
+      },
+      {
+        "name": "df7e8def192b896a0bcc",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "hospital_db doctors"
+              }
+            },
+            "Property": "Total Cancellations"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "Drillthrough"
+      }
+    ]
+  },
+  "pageBinding": {
+    "name": "d684376bd98912919b20",
+    "type": "Drillthrough",
+    "parameters": [
+      {
+        "name": "cba945a25497a41b5b9b",
+        "boundFilter": "0c9d55e0dc6048a00972",
+        "fieldExpr": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "hospital_db bills"
+              }
+            },
+            "Property": "Total Revenue"
+          }
+        }
+      },
+      {
+        "name": "541ea2fd5ea8488761b5",
+        "boundFilter": "df7e8def192b896a0bcc",
+        "fieldExpr": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "hospital_db doctors"
+              }
+            },
+            "Property": "Total Cancellations"
+          }
+        }
+      }
+    ]
+  },
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F0F4F8'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

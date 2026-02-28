@@ -1,0 +1,159 @@
+table 'hospital_db bills'
+	lineageTag: bc0f85c3-1354-4043-9e55-fff5580edf7a
+
+	measure 'Total_Revenue Label' = "₹" & FORMAT(SUM('hospital_db bills'[amount]) / 100000, "0.0") & "L"
+		lineageTag: f562017c-6621-43e9-a071-40009edb2d5a
+
+	measure 'Unpaid Amount Label' =
+			
+			"₹" & FORMAT(
+			    CALCULATE(
+			        SUM('hospital_db bills'[amount]),
+			        'hospital_db bills'[paid] = FALSE()
+			    ) / 100000, "0.0") & "L"
+		lineageTag: ad025e4c-3299-4d4f-83f6-8d8ece94c3ba
+
+	measure 'Total Revenue' = SUM('hospital_db bills'[amount])
+		lineageTag: 049e8116-beec-45e2-a396-40d03ad27c38
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Best Month Revenue' =
+			
+			FORMAT(
+			    MAXX(
+			        SUMMARIZE('hospital_db bills', 'hospital_db bills'[Month Year],
+			        "MonthRev", SUM('hospital_db bills'[amount])),
+			        [MonthRev]
+			    ) / 100000, "0.0") & "L"
+		lineageTag: 00665cf4-7f7f-4559-91ae-47bcdcd4cb71
+
+	measure 'Collection Rate' =
+			
+			FORMAT(
+			    DIVIDE(
+			        CALCULATE(SUM('hospital_db bills'[amount]),
+			        'hospital_db bills'[paid] = TRUE()),
+			        SUM('hospital_db bills'[amount])
+			    ) * 100, "0.0") & "%"
+		lineageTag: 8734d6c7-3867-4ba7-8e88-124e3b0952b1
+
+	measure 'Avg Monthly Revenue' =
+			
+			"₹" & FORMAT(
+			    AVERAGEX(
+			        SUMMARIZE('hospital_db bills', 'hospital_db bills'[Month Year],
+			        "MonthRev", SUM('hospital_db bills'[amount])),
+			        [MonthRev]
+			    ) / 100000, "0.0") & "L"
+		lineageTag: d1818bb0-9e8b-44ec-8091-f5930b118818
+
+	measure 'Collected Amount' = ```
+			
+			CALCULATE(
+			    SUM('hospital_db bills'[amount]),
+			    'hospital_db bills'[paid] = TRUE()
+			)
+			
+			
+			```
+		lineageTag: 9f5d7cf5-067c-4c7d-bf45-eb7b7a2ec96a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Uncollected Amount' =
+			
+			CALCULATE(
+			    SUM('hospital_db bills'[amount]),
+			    'hospital_db bills'[paid] = FALSE()
+			)
+		lineageTag: 59d18194-f3a2-4964-8f41-fd54e741a328
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column billID
+		dataType: int64
+		formatString: 0
+		lineageTag: e258f45e-7406-4233-9382-d46fce5a2b1a
+		summarizeBy: count
+		sourceColumn: billID
+
+		annotation SummarizationSetBy = Automatic
+
+	column appointmentID
+		dataType: int64
+		formatString: 0
+		lineageTag: 86d7c362-b033-4ef5-9d8b-fded7de756d7
+		summarizeBy: none
+		sourceColumn: appointmentID
+
+		annotation SummarizationSetBy = Automatic
+
+	column amount
+		dataType: double
+		lineageTag: d69e8089-4ae5-4b37-ab92-0dfac280a35f
+		summarizeBy: sum
+		sourceColumn: amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column paid
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: bbceda7f-b72c-4db0-a37d-f22d1616780e
+		summarizeBy: none
+		sourceColumn: paid
+
+		annotation SummarizationSetBy = Automatic
+
+	column billDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 824d8024-f9ed-4e67-b259-aa15c480dafa
+		summarizeBy: none
+		sourceColumn: billDate
+
+		variation Variation
+			isDefault
+			relationship: 00a73342-c244-41ed-8921-c7fe95deaf4f
+			defaultHierarchy: LocalDateTable_9c5f198b-37ad-442c-b085-62c2c4947f00.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Year' = FORMAT('hospital_db bills'[billDate], "MMM YYYY")
+		lineageTag: 43af4c8f-e83c-4535-8b9e-6980de1eb02f
+		summarizeBy: none
+		sortByColumn: 'Month Sort'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Sort' = ```
+			YEAR('hospital_db bills'[billDate]) * 100 
+			             + MONTH('hospital_db bills'[billDate])
+			```
+		formatString: 0
+		lineageTag: acbc4515-de06-40d0-9139-170988814a06
+		summarizeBy: sum
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'hospital_db bills' = m
+		mode: import
+		source =
+				let
+				    Source = MySQL.Database("localhost", "hospital_db", [ReturnSingleDatabase=true]),
+				    hospital_db_bills = Source{[Schema="hospital_db",Item="bills"]}[Data],
+				    #"Removed Columns" = Table.RemoveColumns(hospital_db_bills,{"hospital_db.appointments"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

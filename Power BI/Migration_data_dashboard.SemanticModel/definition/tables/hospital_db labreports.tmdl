@@ -1,0 +1,57 @@
+table 'hospital_db labreports'
+	lineageTag: 220da1f3-a629-4409-88dd-f71f517264b7
+
+	column reportID
+		dataType: int64
+		formatString: 0
+		lineageTag: 72be0f16-a06e-48a6-a226-df13f67a5adc
+		summarizeBy: count
+		sourceColumn: reportID
+
+		annotation SummarizationSetBy = Automatic
+
+	column appointmentID
+		dataType: int64
+		formatString: 0
+		lineageTag: abca0539-7e83-4c3b-8867-6a85faf371b0
+		summarizeBy: none
+		sourceColumn: appointmentID
+
+		annotation SummarizationSetBy = Automatic
+
+	column reportData
+		dataType: string
+		lineageTag: 1eb8f056-fa6a-4345-8c95-629fc72101c2
+		summarizeBy: none
+		sourceColumn: reportData
+
+		annotation SummarizationSetBy = Automatic
+
+	column createdAt
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 45006c1a-2aa2-46bf-8186-0ab4438572e9
+		summarizeBy: none
+		sourceColumn: createdAt
+
+		variation Variation
+			isDefault
+			relationship: 65f02aee-0f90-4d2d-bb56-65b4f1caa054
+			defaultHierarchy: LocalDateTable_ad0a9bac-2efb-4fc3-95d8-ec760e650a9f.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'hospital_db labreports' = m
+		mode: import
+		source =
+				let
+				    Source = MySQL.Database("localhost", "hospital_db", [ReturnSingleDatabase=true]),
+				    hospital_db_labreports = Source{[Schema="hospital_db",Item="labreports"]}[Data],
+				    #"Removed Columns" = Table.RemoveColumns(hospital_db_labreports,{"hospital_db.appointments"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

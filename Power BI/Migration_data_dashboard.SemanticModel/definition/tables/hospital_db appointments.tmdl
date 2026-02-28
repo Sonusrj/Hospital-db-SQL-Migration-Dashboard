@@ -1,0 +1,78 @@
+table 'hospital_db appointments'
+	lineageTag: 1f8c1587-666e-454c-8051-d1e7f12fb378
+
+	measure Total_Appointments = COUNTROWS('hospital_db appointments')
+		formatString: 0
+		lineageTag: 6d84e310-b489-489c-964b-cf467656b97c
+
+	measure 'New measure:Completed' =
+			CALCULATE(
+			    COUNTROWS('hospital_db appointments'),
+			    'hospital_db appointments'[status] = "Completed"
+			)
+		formatString: 0
+		lineageTag: 36a63040-3ffb-4bfe-9e33-c54644208260
+
+	column appointmentID
+		dataType: int64
+		formatString: 0
+		lineageTag: e0e10b65-b842-4cc4-a1b0-eff77cf7a10f
+		summarizeBy: none
+		sourceColumn: appointmentID
+
+		annotation SummarizationSetBy = Automatic
+
+	column patientID
+		dataType: int64
+		formatString: 0
+		lineageTag: ad11cf0b-23cc-4107-b17a-c72a87092f3f
+		summarizeBy: none
+		sourceColumn: patientID
+
+		annotation SummarizationSetBy = Automatic
+
+	column doctorID
+		dataType: int64
+		formatString: 0
+		lineageTag: 64f3d160-2f12-47eb-9b39-a84e7d560ae6
+		summarizeBy: none
+		sourceColumn: doctorID
+
+		annotation SummarizationSetBy = Automatic
+
+	column appointmentTime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 2f36352a-4542-4806-8233-97716e0d746d
+		summarizeBy: none
+		sourceColumn: appointmentTime
+
+		variation Variation
+			isDefault
+			relationship: 075c0e74-bc3b-4445-b48d-d1c1745a7653
+			defaultHierarchy: LocalDateTable_04ae4f30-272d-4b1a-8fb8-1ecf8d37be77.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: 8550b6e0-3975-406d-b1d1-fd0612411db7
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'hospital_db appointments' = m
+		mode: import
+		source =
+				let
+				    Source = MySQL.Database("localhost", "hospital_db", [ReturnSingleDatabase=true]),
+				    hospital_db_appointments = Source{[Schema="hospital_db",Item="appointments"]}[Data],
+				    #"Removed Columns" = Table.RemoveColumns(hospital_db_appointments,{"hospital_db.bills", "hospital_db.doctors", "hospital_db.labreports", "hospital_db.patients", "hospital_db.prescriptions"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

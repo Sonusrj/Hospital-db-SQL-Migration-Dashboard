@@ -1,0 +1,29 @@
+model Model
+	culture: en-IN
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-IN
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["hospital_db appointments","hospital_db bills","hospital_db departments","hospital_db doctors","hospital_db labreports","hospital_db patients","hospital_db prescriptions"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table 'hospital_db appointments'
+ref table DateTableTemplate_0fc5aab0-e0c7-48f2-af89-db060824d4fe
+ref table LocalDateTable_04ae4f30-272d-4b1a-8fb8-1ecf8d37be77
+ref table 'hospital_db bills'
+ref table LocalDateTable_9c5f198b-37ad-442c-b085-62c2c4947f00
+ref table 'hospital_db departments'
+ref table 'hospital_db doctors'
+ref table 'hospital_db labreports'
+ref table LocalDateTable_ad0a9bac-2efb-4fc3-95d8-ec760e650a9f
+ref table 'hospital_db patients'
+ref table LocalDateTable_9c6a9d54-834c-4042-8574-048fb538383d
+ref table 'hospital_db prescriptions'
+
+ref cultureInfo en-IN
+

@@ -1,0 +1,34 @@
+table 'hospital_db departments'
+	lineageTag: f3b33af1-1657-4fb8-b22d-7c571b0fb697
+
+	column departmentID
+		dataType: int64
+		formatString: 0
+		lineageTag: 8517aeb2-4f92-4872-9956-28ab807f89b8
+		summarizeBy: none
+		sourceColumn: departmentID
+
+		annotation SummarizationSetBy = Automatic
+
+	column name
+		dataType: string
+		lineageTag: e231e6c4-fe63-4308-8fa7-352d957f14f1
+		summarizeBy: none
+		sourceColumn: name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'hospital_db departments' = m
+		mode: import
+		source =
+				let
+				    Source = MySQL.Database("localhost", "hospital_db", [ReturnSingleDatabase=true]),
+				    hospital_db_departments = Source{[Schema="hospital_db",Item="departments"]}[Data],
+				    #"Removed Columns" = Table.RemoveColumns(hospital_db_departments,{"hospital_db.doctors"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

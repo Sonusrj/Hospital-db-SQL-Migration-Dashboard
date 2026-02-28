@@ -1,0 +1,113 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 24.804263929022486
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 620.84282039959976,
+            "y": 320.55922941808905
+          },
+          "nodeIndex": "hospital_db appointments",
+          "nodeLineageTag": "1f8c1587-666e-454c-8051-d1e7f12fb378",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 492.2150393018494,
+            "y": 571.93149912924468
+          },
+          "nodeIndex": "hospital_db bills",
+          "nodeLineageTag": "bc0f85c3-1354-4043-9e55-fff5580edf7a",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 336.31373023376005,
+            "y": 337.57480466724979
+          },
+          "nodeIndex": "hospital_db departments",
+          "nodeLineageTag": "f3b33af1-1657-4fb8-b22d-7c571b0fb697",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 166.06773314805866
+          },
+          "nodeIndex": "hospital_db doctors",
+          "nodeLineageTag": "6fbefe9a-7f08-4492-ab61-02e8882e2ca2",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 896.73050985130385,
+            "y": 573.09627309177131
+          },
+          "nodeIndex": "hospital_db labreports",
+          "nodeLineageTag": "220da1f3-a629-4409-88dd-f71f517264b7",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 337.135768559467,
+            "y": -50
+          },
+          "nodeIndex": "hospital_db patients",
+          "nodeLineageTag": "2153f196-08aa-4e77-9ba0-a778bb4fe756",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 907.91585478499189,
+            "y": 207.43974150049115
+          },
+          "nodeIndex": "hospital_db prescriptions",
+          "nodeLineageTag": "e30d2f71-039d-4c1a-b212-402ca940698d",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 6
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 70.955543900968834,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

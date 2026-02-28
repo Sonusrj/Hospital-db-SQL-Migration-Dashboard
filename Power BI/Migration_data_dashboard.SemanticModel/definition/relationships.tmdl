@@ -1,0 +1,56 @@
+relationship 075c0e74-bc3b-4445-b48d-d1c1745a7653
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'hospital_db appointments'.appointmentTime
+	toColumn: LocalDateTable_04ae4f30-272d-4b1a-8fb8-1ecf8d37be77.Date
+
+relationship 00a73342-c244-41ed-8921-c7fe95deaf4f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'hospital_db bills'.billDate
+	toColumn: LocalDateTable_9c5f198b-37ad-442c-b085-62c2c4947f00.Date
+
+relationship 65f02aee-0f90-4d2d-bb56-65b4f1caa054
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'hospital_db labreports'.createdAt
+	toColumn: LocalDateTable_ad0a9bac-2efb-4fc3-95d8-ec760e650a9f.Date
+
+relationship 53031de7-1e88-4a20-81ff-668aecf86254
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'hospital_db patients'.dateOfBirth
+	toColumn: LocalDateTable_9c6a9d54-834c-4042-8574-048fb538383d.Date
+
+relationship 7bb022a9-70ac-4390-83e8-7c70f5d01461
+	fromColumn: 'hospital_db appointments'.doctorID
+	toColumn: 'hospital_db doctors'.doctorID
+
+	annotation PBI_IsFromSource = FS
+
+relationship 803b6c2f-e554-4190-9afb-50a30ac0f3ee
+	fromColumn: 'hospital_db appointments'.patientID
+	toColumn: 'hospital_db patients'.patientID
+
+	annotation PBI_IsFromSource = FS
+
+relationship ad737baf-8249-40c9-8c7b-c781568b6715
+	fromColumn: 'hospital_db bills'.appointmentID
+	toColumn: 'hospital_db appointments'.appointmentID
+
+	annotation PBI_IsFromSource = FS
+
+relationship 057e706a-7fb6-4596-93db-0da8949079f4
+	fromColumn: 'hospital_db doctors'.departmentID
+	toColumn: 'hospital_db departments'.departmentID
+
+	annotation PBI_IsFromSource = FS
+
+relationship 69b20706-5e29-489c-b83f-f66552b91115
+	fromColumn: 'hospital_db labreports'.appointmentID
+	toColumn: 'hospital_db appointments'.appointmentID
+
+	annotation PBI_IsFromSource = FS
+
+relationship 6833bdc1-f84d-4b70-8921-d1c25118e428
+	fromColumn: 'hospital_db prescriptions'.appointmentID
+	toColumn: 'hospital_db appointments'.appointmentID
+
+	annotation PBI_IsFromSource = FS
+

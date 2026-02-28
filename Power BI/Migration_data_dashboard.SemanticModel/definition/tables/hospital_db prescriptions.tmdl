@@ -1,0 +1,51 @@
+table 'hospital_db prescriptions'
+	lineageTag: e30d2f71-039d-4c1a-b212-402ca940698d
+
+	column prescriptionID
+		dataType: int64
+		formatString: 0
+		lineageTag: bf5929bf-c0a9-4c3f-bccc-9d9eb14b1309
+		summarizeBy: count
+		sourceColumn: prescriptionID
+
+		annotation SummarizationSetBy = Automatic
+
+	column appointmentID
+		dataType: int64
+		formatString: 0
+		lineageTag: fb515d45-eec7-4977-a32c-6dba33c7ddac
+		summarizeBy: none
+		sourceColumn: appointmentID
+
+		annotation SummarizationSetBy = Automatic
+
+	column medication
+		dataType: string
+		lineageTag: c2910fe5-6284-47de-9c13-1b36de135c95
+		summarizeBy: none
+		sourceColumn: medication
+
+		annotation SummarizationSetBy = Automatic
+
+	column dosage
+		dataType: string
+		lineageTag: 1455ebdc-aca9-4bc4-b221-44b17e436cde
+		summarizeBy: none
+		sourceColumn: dosage
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'hospital_db prescriptions' = m
+		mode: import
+		source =
+				let
+				    Source = MySQL.Database("localhost", "hospital_db", [ReturnSingleDatabase=true]),
+				    hospital_db_prescriptions = Source{[Schema="hospital_db",Item="prescriptions"]}[Data],
+				    #"Removed Columns" = Table.RemoveColumns(hospital_db_prescriptions,{"hospital_db.appointments"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

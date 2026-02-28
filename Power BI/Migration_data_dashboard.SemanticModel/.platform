@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Mirgration_data_dashboard"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "d3ec0ccd-509e-4944-b7f0-d85a8c5dc8b0"
+  }
+}

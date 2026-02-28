@@ -1,0 +1,97 @@
+table 'hospital_db doctors'
+	lineageTag: 6fbefe9a-7f08-4492-ab61-02e8882e2ca2
+
+	measure 'Top Doctor Revenue' =
+			
+			"₹" & FORMAT(
+			    MAXX(
+			        SUMMARIZE(
+			            'hospital_db appointments',
+			            'hospital_db appointments'[doctorID],
+			            "DocRev", CALCULATE(SUM('hospital_db bills'[amount]))
+			        ),
+			        [DocRev]
+			    ) / 1000, "0.0") & "K"
+		lineageTag: 88a20625-08c3-4148-96dc-4012645057fa
+
+	measure 'Avg Appointments Per Doctor' =
+			
+			FORMAT(
+			    DIVIDE(
+			        COUNTROWS('hospital_db appointments'),
+			        DISTINCTCOUNT('hospital_db appointments'[doctorID])
+			    ), "0.0")
+		lineageTag: a1b463d6-4513-40af-9270-5f59a007e9eb
+
+	measure 'Cancellation Rate' =
+			
+			FORMAT(
+			    DIVIDE(
+			        CALCULATE(
+			            COUNTROWS('hospital_db appointments'),
+			            'hospital_db appointments'[status] = "Cancelled"
+			        ),
+			        COUNTROWS('hospital_db appointments')
+			    ) * 100, "0.0") & "%"
+		lineageTag: 7655f128-38a1-4d74-9222-f4c49f764df2
+
+	measure 'Total Cancellations' = CALCULATE( COUNTROWS('hospital_db appointments'), 'hospital_db appointments'[status] = "Cancelled")
+		formatString: 0
+		lineageTag: 5e2d1755-fb47-45f9-b1a7-118550115394
+
+	column doctorID
+		dataType: int64
+		formatString: 0
+		lineageTag: 1e569c7d-1fe6-43c3-9361-88fab88b410d
+		summarizeBy: none
+		sourceColumn: doctorID
+
+		annotation SummarizationSetBy = Automatic
+
+	column name
+		dataType: string
+		lineageTag: 9ba6ec19-2eb7-47c2-86fc-cf53cd861575
+		summarizeBy: none
+		sourceColumn: name
+
+		annotation SummarizationSetBy = Automatic
+
+	column specialization
+		dataType: string
+		lineageTag: b6fc0c80-589c-49c0-976e-789515000547
+		summarizeBy: none
+		sourceColumn: specialization
+
+		annotation SummarizationSetBy = Automatic
+
+	column role
+		dataType: string
+		lineageTag: 4c1c7c3d-86ee-4ca0-a450-4c6f9e1a6092
+		summarizeBy: none
+		sourceColumn: role
+
+		annotation SummarizationSetBy = Automatic
+
+	column departmentID
+		dataType: int64
+		formatString: 0
+		lineageTag: 3c434a19-1278-4462-993c-718582d1b914
+		summarizeBy: none
+		sourceColumn: departmentID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'hospital_db doctors' = m
+		mode: import
+		source =
+				let
+				    Source = MySQL.Database("localhost", "hospital_db", [ReturnSingleDatabase=true]),
+				    hospital_db_doctors = Source{[Schema="hospital_db",Item="doctors"]}[Data],
+				    #"Removed Columns" = Table.RemoveColumns(hospital_db_doctors,{"hospital_db.appointments", "hospital_db.departments", "hospital_db.doctor_credentials"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
