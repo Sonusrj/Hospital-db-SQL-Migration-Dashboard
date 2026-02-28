@@ -19,37 +19,6 @@ This project replaces that flat file with a production-ready data solution:
 
 ---
 
-## 📁 Repository Structure
-
-```
-hospital-analytics/
-│
-├── README.md
-│
-├── sql/
-│   ├── Hospital_DB_Migration_complete.sql   ← Full schema + migration + triggers + procedures
-│
-├── python/
-│   ├── hospital_export.ipynb                ← Jupyter Notebook (MySQL → Excel ETL)
-│   └── requirements.txt                     ← Python dependencies
-│
-├── powerbi/
-│   └── hospital_dashboard.pbix              ← Power BI dashboard 
-│
-├──output_data
-│       └── hospital_report.xlsx             ← Python-generated 
-│
-├── docs/
-│   └── hospital_project_documentation.docx ← Full project 
-└── screenshots/
-        ├── Overview.png
-        ├── Revenue_Analysis.png
-        └── Doctors_Performance.png
-    
-```
-
----
-
 ## 🗄️ Database Design
 
 The flat Excel file was decomposed into **8 normalized tables** following Third Normal Form (3NF). All relationships are enforced through foreign keys, mirroring real-world hospital relationships.
