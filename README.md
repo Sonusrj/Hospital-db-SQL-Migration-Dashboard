@@ -117,7 +117,7 @@ Connected to MySQL via **DirectQuery** (live data — not a static import). Requ
 
 ### Page 1 — Hospital Overview
 
-![Overview Dashboard](Overview_gif.gif)
+![Dashboard overview](Screenshots/Dashboard_GIFs/Overview.gif)
 
 At-a-glance hospital-wide KPIs for management:
 
@@ -133,7 +133,7 @@ At-a-glance hospital-wide KPIs for management:
 
 ### Page 2 — Revenue Analysis
 
-![Revenue Analysis](Analysis.gif)
+![Revenue Analysis Page](Screenshots/Dashboard_GIFs/Analysis.gif)
 
 Deep financial visibility across departments and time:
 
@@ -147,7 +147,7 @@ Deep financial visibility across departments and time:
 
 ### Page 3 — Doctor Performance
 
-![Doctors performance](doctor_perf.gif)
+![Doctors Performance Page](Screenshots/Dashboard_GIFs/doctor_perf.gif)
 
 Individual and role-based performance visibility:
 
